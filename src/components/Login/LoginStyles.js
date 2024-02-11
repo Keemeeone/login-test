@@ -1,7 +1,6 @@
 // LoginStyles.js
 export const containerStyle = {
-    maxHeight: '100%',
-    maxWidth: '100%',
+
     fontFamily: 'Montserrat, sans-serif',
     fontStyle: 'normal',
     textAlign: 'center',
@@ -20,10 +19,6 @@ export const inputContainerStyle = {
 export const inputStyle = {
     color: 'white',
     border: '1px solid white',
-};
-
-export const alertBoxStyle = {
-    position: 'relative',
 };
 
 export const loginButtonStyle = {

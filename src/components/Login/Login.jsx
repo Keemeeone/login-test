@@ -9,8 +9,8 @@
  */
 
 import React, { useState } from 'react';
-import { Alert, Row, Col } from 'react-bootstrap';
-import { TextField, InputAdornment, Container, Button, Box } from '@mui/material';
+import { Row, Col } from 'react-bootstrap';
+import { TextField, InputAdornment, Container, Button, Box, Alert } from '@mui/material';
 import { FiUser } from 'react-icons/fi';
 import { IoLockClosedOutline } from 'react-icons/io5';
 import {
@@ -18,7 +18,6 @@ import {
     imageStyle,
     inputContainerStyle,
     inputStyle,
-    alertBoxStyle,
     loginButtonStyle,
     forgotPasswordStyle,
 } from './LoginStyles';
@@ -28,25 +27,17 @@ const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-    const [show, setShow] = useState(false);
 
     //  Handles the login process. 
     const handleLogin = () => {
         if (username === 'test@luxpmsoft.com' && password === 'test1234!') {
             window.location.href = '/dashboard';
-        } else {
-            setShow(true);
-        }
-    };
-
-    //  Handles the change in the password input field.
-    const handlePasswordChange = (e) => {
-        const value = e.target.value;
-        if (/^[a-zA-Z0-9!@#$%^&*()_+]+$/.test(value) || value === '') {
-            setPassword(value);
-            setErrorMessage('');
-        } else {
-            setErrorMessage('Wrong Combination!');
+        } else if (!username || !password) {
+            setErrorMessage('Both a username and a password must be provided!');
+        } else if(!/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])\S+$/.test(password)){
+            setErrorMessage("Wrong combination password!");
+        }else{
+            alert("The provided username or password is wrong!");
         }
     };
 
@@ -83,7 +74,7 @@ const Login = () => {
                         <TextField
                             type="password"
                             value={password}
-                            onChange={handlePasswordChange}
+                            onChange={(e) => setPassword(e.target.value)}
                             placeholder="PASSWORD"
                             InputProps={{
                                 startAdornment: (
@@ -101,15 +92,8 @@ const Login = () => {
                             }}
                         />
                     </Box>
-                    <Box style={alertBoxStyle}>
-                        {show && (
-                            <Alert variant="danger" onClose={() => setShow(false)} dismissible>
-                                The provided Password is wrong!
-                            </Alert>
-                        )}
-                    </Box>
                     {errorMessage && (
-                        <Alert variant="danger">
+                        <Alert severity="warning" onClose={() => {setErrorMessage('')}}>
                             {errorMessage}
                         </Alert>
                     )}
