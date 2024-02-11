@@ -1,12 +1,13 @@
 // LoginStyles.js
 export const containerStyle = {
-
     fontFamily: 'Montserrat, sans-serif',
     fontStyle: 'normal',
     textAlign: 'center',
+    zIndex: 1,
 };
 
 export const imageStyle = {
+    position: 'relative',
     maxWidth: '100%',
     height: 'auto',
 };
@@ -32,5 +33,7 @@ export const forgotPasswordStyle = {
     cursor: 'pointer',
     color: 'white',
     textAlign: 'right',
-    marginTop: '2vh',
+    marginTop: '1vh',
+    zIndex: 1,
 };
+

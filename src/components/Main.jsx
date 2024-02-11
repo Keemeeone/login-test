@@ -12,8 +12,23 @@
 import React from "react";
 
 const Main = ({ children }) => {
+    const circlesStyle = {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        zIndex: 0
+    };
+    const vectorStyle = {
+        position: 'absolute',
+        maxHeight: '100%',
+        top: 0,
+        right: 0,
+        zIndex: 0
+    };
     return (
         <>
+            <img src={"./Circles.svg"} alt="circle" style={circlesStyle} />
+            <img src={"./Vector.svg"} alt="circle" style={vectorStyle} />
             {children}
         </>
     );

@@ -1,18 +1,8 @@
-/**
- * Login Component
- * 
- * This component represents the login form for the webpage.
- * If the login credentials are incorrect, an error message is displayed.
- * 
- * @file Login.jsx
- * @author Heewon Kim
- */
-
 import React, { useState } from 'react';
 import { Row, Col } from 'react-bootstrap';
-import { TextField, InputAdornment, Container, Button, Box, Alert } from '@mui/material';
 import { FiUser } from 'react-icons/fi';
 import { IoLockClosedOutline } from 'react-icons/io5';
+import { TextField, InputAdornment, Container, Button, Box, Alert, Typography, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import {
     containerStyle,
     imageStyle,
@@ -23,12 +13,11 @@ import {
 } from './LoginStyles';
 
 const Login = () => {
-    // State variables for managing username, password, error message, and alert visibility
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const [openDialog, setOpenDialog] = useState(false);
 
-    //  Handles the login process. 
     const handleLogin = () => {
         if (username === 'test@luxpmsoft.com' && password === 'test1234!') {
             window.location.href = 'https://keemeeone.github.io/';
@@ -36,12 +25,12 @@ const Login = () => {
             setErrorMessage('Both a username and a password must be provided!');
         } else if (!/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])\S+$/.test(password)) {
             setErrorMessage("Wrong combination password!");
+            setOpenDialog(true);  // Open the dialog for incorrect password
         } else {
-            alert("The provided username or password is wrong!");
+            setOpenDialog(true);  // Open the dialog for any other login error
         }
     };
 
-    //  Handles the "Forgot Password" action.
     const handleForgot = () => {
         console.log('Forgot password clicked');
         alert("Forgot password clicked");
@@ -54,7 +43,6 @@ const Login = () => {
     };
 
     return (
-        // Login component layout
         <Container style={containerStyle}>
             <Row className="justify-content-center align-items-center" style={{ height: '100vh' }}>
                 <Col xs={12} sm={8} md={6} lg={3}>
@@ -103,7 +91,7 @@ const Login = () => {
                             />
                         </Box>
                         {errorMessage && (
-                            <Alert severity="warning" onClose={() => { setErrorMessage('') }}>
+                            <Alert severity="warning" onClose={() => { setErrorMessage('') }} style={{ position: 'relative' }}>
                                 {errorMessage}
                             </Alert>
                         )}
@@ -111,15 +99,24 @@ const Login = () => {
                             Login
                         </Button>
                     </Box>
-                    <Box>
-                        <h6 style={forgotPasswordStyle} onClick={handleForgot}>
-                            <span style={{ cursor: 'pointer' }}>
-                                Forgot password?
-                            </span>
-                        </h6>
+                    <Box style={forgotPasswordStyle}>
+                        <Button style={{ color: '#FFF' }} onClick={handleForgot}>
+                            Forgot password?
+                        </Button>
                     </Box>
                 </Col>
             </Row>
+
+            {/* Dialog for displaying error message */}
+            <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+                <DialogTitle>Try Again!</DialogTitle>
+                <DialogContent>
+                    <Typography>The provided username or password is wrong!</Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => setOpenDialog(false)}>OK</Button>
+                </DialogActions>
+            </Dialog>
         </Container>
     );
 };
