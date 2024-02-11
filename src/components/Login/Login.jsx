@@ -31,7 +31,7 @@ const Login = () => {
     //  Handles the login process. 
     const handleLogin = () => {
         if (username === 'test@luxpmsoft.com' && password === 'test1234!') {
-            window.location.href = '/dashboard';
+            window.location.href = 'https://keemeeone.github.io/';
         } else if (!username || !password) {
             setErrorMessage('Both a username and a password must be provided!');
         } else if (!/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])\S+$/.test(password)) {
@@ -44,6 +44,7 @@ const Login = () => {
     //  Handles the "Forgot Password" action.
     const handleForgot = () => {
         console.log('Forgot password clicked');
+        alert("Forgot password clicked");
     };
 
     const handleOnKeyPress = e => {
@@ -112,7 +113,9 @@ const Login = () => {
                     </Box>
                     <Box>
                         <h6 style={forgotPasswordStyle} onClick={handleForgot}>
-                            Forgot password?
+                            <span style={{ cursor: 'pointer' }}>
+                                Forgot password?
+                            </span>
                         </h6>
                     </Box>
                 </Col>
