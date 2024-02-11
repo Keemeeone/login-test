@@ -34,9 +34,9 @@ const Login = () => {
             window.location.href = '/dashboard';
         } else if (!username || !password) {
             setErrorMessage('Both a username and a password must be provided!');
-        } else if(!/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])\S+$/.test(password)){
+        } else if (!/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])\S+$/.test(password)) {
             setErrorMessage("Wrong combination password!");
-        }else{
+        } else {
             alert("The provided username or password is wrong!");
         }
     };
@@ -46,60 +46,70 @@ const Login = () => {
         console.log('Forgot password clicked');
     };
 
+    const handleOnKeyPress = e => {
+        if (e.key === 'Enter') {
+            handleLogin();
+        }
+    };
+
     return (
         // Login component layout
         <Container style={containerStyle}>
             <Row className="justify-content-center align-items-center" style={{ height: '100vh' }}>
                 <Col xs={12} sm={8} md={6} lg={3}>
                     <img src="./cart.svg" alt="cart" style={imageStyle} />
-                    <Box style={inputContainerStyle}>
-                        <TextField
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            placeholder="USERNAME"
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <FiUser style={{ color: '#FFFFFF' }} />
-                                    </InputAdornment>
-                                ),
-                                style: inputStyle,
-                            }}
-                            variant="outlined"
-                            fullWidth
-                            sx={{
-                                ' .MuiOutlinedInput-root': inputStyle,
-                            }}
-                        />
-                        <TextField
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            placeholder="PASSWORD"
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <IoLockClosedOutline style={{ color: '#FFFFFF' }} />
-                                    </InputAdornment>
-                                ),
-                                style: inputStyle,
-                            }}
-                            variant="outlined"
-                            fullWidth
-                            margin="normal"
-                            sx={{
-                                ' .MuiOutlinedInput-root': inputStyle,
-                            }}
-                        />
+                    <Box>
+                        <Box style={inputContainerStyle}>
+                            <TextField
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                placeholder="USERNAME"
+                                onKeyPress={handleOnKeyPress}
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <FiUser style={{ color: '#FFFFFF' }} />
+                                        </InputAdornment>
+                                    ),
+                                    style: inputStyle,
+                                }}
+                                variant="outlined"
+                                fullWidth
+                                sx={{
+                                    ' .MuiOutlinedInput-root': inputStyle,
+                                }}
+                            />
+                            <TextField
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="PASSWORD"
+                                onKeyPress={handleOnKeyPress}
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <IoLockClosedOutline style={{ color: '#FFFFFF' }} />
+                                        </InputAdornment>
+                                    ),
+                                    style: inputStyle,
+                                }}
+                                variant="outlined"
+                                fullWidth
+                                margin="normal"
+                                sx={{
+                                    ' .MuiOutlinedInput-root': inputStyle,
+                                }}
+                            />
+                        </Box>
+                        {errorMessage && (
+                            <Alert severity="warning" onClose={() => { setErrorMessage('') }}>
+                                {errorMessage}
+                            </Alert>
+                        )}
+                        <Button variant="contained" onClick={handleLogin} style={loginButtonStyle}>
+                            Login
+                        </Button>
                     </Box>
-                    {errorMessage && (
-                        <Alert severity="warning" onClose={() => {setErrorMessage('')}}>
-                            {errorMessage}
-                        </Alert>
-                    )}
-                    <Button variant="contained" onClick={handleLogin} style={loginButtonStyle}>
-                        Login
-                    </Button>
                     <Box>
                         <h6 style={forgotPasswordStyle} onClick={handleForgot}>
                             Forgot password?
